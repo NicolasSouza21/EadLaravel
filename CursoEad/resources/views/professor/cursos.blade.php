@@ -1,25 +1,25 @@
 @extends('layouts.app')
 
-@section('title', 'Meus Cursos')
+@section('title', 'Cursos Disponíveis')
 
 @section('content')
-    <h1>Meus Cursos</h1>
+    <h1>Cursos Disponíveis</h1>
 
     @if($cursos->isEmpty())
-        <p>Você ainda não criou nenhum curso.</p>
+        <p>Não há cursos disponíveis no momento.</p>
     @else
-        <div class="card-container">
+        <div class="cursos-lista">
             @foreach($cursos as $curso)
-                <div class="card">
-                    <div class="card-header">
-                        <h3>{{ $curso->nome }}</h3>
-                    </div>
-                    <div class="card-body">
-                        <p><strong>Descrição:</strong> {{ $curso->descricao }}</p>
-                        <p><strong>Data de Início:</strong> {{ \Carbon\Carbon::parse($curso->data_inicio)->format('d/m/Y') }}</p>
-                        <p><strong>Data de Fim:</strong> {{ \Carbon\Carbon::parse($curso->data_fim)->format('d/m/Y') }}</p>
-                        <p><strong>Preço:</strong> R$ {{ number_format($curso->preco, 2, ',', '.') }}</p>
-                    </div>
+                <div class="card-curso">
+                    <h2>{{ $curso->nome }}</h2>
+                    <p>{{ $curso->descricao }}</p>
+                    <p><strong>Início:</strong> {{ \Carbon\Carbon::parse($curso->data_inicio)->format('d/m/Y') }}</p>
+                    <p><strong>Fim:</strong> {{ \Carbon\Carbon::parse($curso->data_fim)->format('d/m/Y') }}</p>
+                    <p><strong>Preço:</strong> R$ {{ number_format($curso->preco, 2, ',', '.') }}</p>
+                    <form action="{{ route('aluno.inscrever', $curso->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn-main">Inscrever-se</button>
+                    </form>
                 </div>
             @endforeach
         </div>

@@ -38,4 +38,29 @@ class CursoController extends Controller
 
         return redirect()->route('professor.dashboard')->with('status', 'Curso criado com sucesso!');
     }
+    public function edit(Curso $curso)
+    {
+        return view('edit-course', compact('curso'));
+    }
+
+    public function update(Request $request, Curso $curso)
+    {
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'descricao' => 'required|string',
+            'data_inicio' => 'required|date',
+            'data_fim' => 'required|date|after_or_equal:data_inicio',
+            'preco' => 'required|numeric|min:0',
+        ]);
+
+        $curso->update($request->all());
+
+        return redirect()->route('professor.cursos')->with('status', 'Curso atualizado com sucesso!');
+    }
+    public function listarCursos()
+{
+    $cursos = Curso::all(); // Busca todos os cursos cadastrados
+    return view('aluno.cursos', compact('cursos'));
+}
+
 }

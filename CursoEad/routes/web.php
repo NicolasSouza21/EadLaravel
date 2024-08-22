@@ -87,3 +87,11 @@ Route::group(['middleware' => ['auth:professor']], function () {
     Route::get('/professor/cursos', [ProfessorController::class, 'cursos'])->name('professor.cursos');
     // Outras rotas protegidas para professores
 });
+// Rota para a página de edição de curso
+Route::get('/cursos/{curso}/edit', [CursoController::class, 'edit'])->name('cursos.edit');
+
+// Rota para atualizar o curso
+Route::put('/cursos/{curso}', [CursoController::class, 'update'])->name('cursos.update');
+
+Route::get('/cursos', [CursoController::class, 'listarCursos'])->name('aluno.cursos');
+Route::post('/cursos/{id}/inscrever', [AlunoController::class, 'inscreverCurso'])->name('aluno.inscrever');
