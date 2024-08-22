@@ -53,4 +53,21 @@ class ProfessorController extends Controller
 
         return view('professor.cursos', compact('cursos'));
     }
+    // app/Http/Controllers/ProfessorController.php
+
+public function alunosInscritos($cursoId)
+{
+    $curso = Curso::findOrFail($cursoId);
+
+    // Verifica se o curso pertence ao professor
+    $professor = Auth::guard('professor')->user();
+    if ($curso->professor_id !== $professor->id) {
+        return redirect()->route('professor.dashboard')->withErrors('Você não tem permissão para visualizar este curso.');
+    }
+
+    $alunos = $curso->alunos; // Obtém a lista de alunos inscritos
+
+    return view('professor.alunos-inscritos', compact('curso', 'alunos'));
+}
+
 }

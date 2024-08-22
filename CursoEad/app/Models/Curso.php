@@ -37,4 +37,6 @@ class Curso extends Model
         'data_fim' => 'datetime',
     ];
 
+    
+
 }

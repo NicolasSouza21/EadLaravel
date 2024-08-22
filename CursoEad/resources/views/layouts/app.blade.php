@@ -16,7 +16,8 @@
 
                     @auth('aluno')
                         <li><a href="{{ route('aluno.dashboard') }}" class="btn-main">Dashboard Aluno</a></li>
-                        <li><a href="{{ route('aluno.cursos') }}" class="btn-main">Meus Cursos</a></li>
+                        <li><a href="{{ route('aluno.meus-cursos') }}" class="btn-main">Meus Cursos</a></li>
+                        <li><a href="{{ route('aluno.cursos') }}" class="btn-main">Cursos Disponíveis</a></li> <!-- Novo botão para visualizar cursos -->
                     @endauth
 
                     @auth('professor')

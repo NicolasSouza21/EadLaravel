@@ -55,8 +55,58 @@ class AlunoController extends Controller
         return view('aluno.curso-detalhes', compact('curso'));
     }
 
+    public function listarCursos()
+    {
+        // Buscar todos os cursos cadastrados
+        $cursos = Curso::all();
+
+        // Retornar a view com a lista de cursos
+        return view('aluno.lista-cursos', compact('cursos'));
+    }
+
+    // app/Http/Controllers/AlunoController.php
+
+// app/Http/Controllers/AlunoController.php
+
+// app/Http/Controllers/AlunoController.php
+
+public function inscreverCurso(Request $request, $cursoId)
+{
+    // Obtém o curso pelo ID
+    $curso = Curso::findOrFail($cursoId);
+
+    // Obtém o aluno autenticado
+    $aluno = Auth::guard('aluno')->user();
+
+    // Verifica se o aluno está autenticado
+    if (!$aluno) {
+        return redirect()->route('login.aluno')->with('error', 'Você precisa estar logado para se inscrever em um curso.');
+    }
+
+    // Verifica se o aluno já está inscrito no curso
+    if ($aluno->cursos->contains($cursoId)) {
+        return redirect()->route('aluno.cursos')->with('error', 'Você já está inscrito neste curso.');
+    }
+
+    // Adiciona o curso à lista de cursos do aluno
+    $aluno->cursos()->attach($cursoId);
+
+    return redirect()->route('aluno.cursos')->with('success', 'Inscrição realizada com sucesso.');
+}
+
+public function meusCursos()
+    {
+        $aluno = Auth::guard('aluno')->user();
+        $cursos = $aluno->cursos; // Recupera os cursos aos quais o aluno está inscrito
+
+        return view('aluno.meus-cursos', compact('cursos'));
+    }
+
+
 
 }
+
+
 
 
 

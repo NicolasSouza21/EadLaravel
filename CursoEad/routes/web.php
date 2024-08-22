@@ -46,52 +46,50 @@ Route::post('register/professor', [RegistrationController::class, 'registerProfe
 // Rotas para o painel do aluno (protegidas por middleware)
 Route::group(['middleware' => ['auth:aluno']], function () {
     Route::get('/aluno/dashboard', [AlunoController::class, 'dashboard'])->name('aluno.dashboard');
-    Route::get('/aluno/cursos', [AlunoController::class, 'cursos'])->name('aluno.cursos');
-    // Outras rotas protegidas para alunos
+    Route::get('/aluno/cursos', [AlunoController::class, 'listarCursos'])->name('aluno.cursos'); // Corrigido para listarCursos
+    Route::post('/cursos/{id}/inscrever', [AlunoController::class, 'inscreverCurso'])->name('aluno.inscrever');
 });
 
 // Rotas para o painel do professor (protegidas por middleware)
 Route::group(['middleware' => ['auth:professor']], function () {
     Route::get('/professor/dashboard', [ProfessorController::class, 'dashboard'])->name('professor.dashboard');
     Route::get('/professor/cursos', [ProfessorController::class, 'cursos'])->name('professor.cursos');
-    // Outras rotas protegidas para professores
-});
-
-// Rotas de recursos para professores (CRUD completo)
-Route::resource('professores', ProfessorController::class);
-
-// Adicione outras rotas conforme necessário
-Route::group(['middleware' => ['auth:aluno']], function () {
-    Route::get('/aluno/dashboard', [AlunoController::class, 'dashboard'])->name('aluno.dashboard');
-    // Outras rotas protegidas para alunos
-});
-
-// Rotas para o painel do professor (protegidas por middleware)
-Route::group(['middleware' => ['auth:professor']], function () {
-    Route::get('/professor/dashboard', [ProfessorController::class, 'dashboard'])->name('professor.dashboard');
-    // Outras rotas protegidas para professores
-});
-
-Route::post('logout/aluno', [LoginController::class, 'logoutAluno'])->name('logout.aluno');
-Route::post('logout/professor', [LoginController::class, 'logoutProfessor'])->name('logout.professor');
-
-// Rotas para criação de curso
-Route::group(['middleware' => ['auth:professor']], function () {
     Route::get('/curso/create', [CursoController::class, 'create'])->name('cursos.create');
     Route::post('/curso', [CursoController::class, 'store'])->name('cursos.store');
 });
 
-// Rotas para o painel do professor (protegidas por middleware)
-Route::group(['middleware' => ['auth:professor']], function () {
-    Route::get('/professor/dashboard', [ProfessorController::class, 'dashboard'])->name('professor.dashboard');
-    Route::get('/professor/cursos', [ProfessorController::class, 'cursos'])->name('professor.cursos');
-    // Outras rotas protegidas para professores
-});
 // Rota para a página de edição de curso
 Route::get('/cursos/{curso}/edit', [CursoController::class, 'edit'])->name('cursos.edit');
 
 // Rota para atualizar o curso
 Route::put('/cursos/{curso}', [CursoController::class, 'update'])->name('cursos.update');
 
-Route::get('/cursos', [CursoController::class, 'listarCursos'])->name('aluno.cursos');
+// Rota para listar todos os cursos disponíveis para alunos
+// Adicionada dentro do grupo de middleware para alunos
+Route::group(['middleware' => ['auth:aluno']], function () {
+    Route::get('/aluno/cursos', [AlunoController::class, 'listarCursos'])->name('aluno.cursos');
+});
+
+// Rota para inscrição no curso
 Route::post('/cursos/{id}/inscrever', [AlunoController::class, 'inscreverCurso'])->name('aluno.inscrever');
+
+// Rotas para logout
+Route::post('logout/aluno', [LoginController::class, 'logoutAluno'])->name('logout.aluno');
+Route::post('logout/professor', [LoginController::class, 'logoutProfessor'])->name('logout.professor');
+
+// routes/web.php
+
+Route::group(['middleware' => ['auth:professor']], function () {
+    Route::get('/professor/cursos/{curso}/alunos', [ProfessorController::class, 'alunosInscritos'])->name('professor.alunos-inscritos');
+});
+
+// routes/web.php
+
+// Rotas para o painel do aluno (protegidas por middleware)
+Route::group(['middleware' => ['auth:aluno']], function () {
+    Route::get('/aluno/dashboard', [AlunoController::class, 'dashboard'])->name('aluno.dashboard');
+    Route::get('/aluno/cursos', [AlunoController::class, 'listarCursos'])->name('aluno.cursos'); // Todos os cursos disponíveis
+    Route::get('/aluno/meus-cursos', [AlunoController::class, 'meusCursos'])->name('aluno.meus-cursos'); // Cursos nos quais o aluno está inscrito
+    Route::post('/cursos/{id}/inscrever', [AlunoController::class, 'inscreverCurso'])->name('aluno.inscrever'); // Inscrever-se no curso
+});
+
