@@ -55,6 +55,8 @@ class AlunoController extends Controller
         return view('aluno.curso-detalhes', compact('curso'));
     }
 
- 
 
 }
+
+
+

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma de Cursos Online</title>
+    <title>@yield('title', 'Plataforma de Cursos Online')</title>
     <link rel="stylesheet" href="{{ asset('css/nav.css') }}">
 </head>
 <body>
@@ -21,6 +21,7 @@
 
                     @auth('professor')
                         <li><a href="{{ route('professor.dashboard') }}" class="btn-main">Dashboard Professor</a></li>
+                        <li><a href="{{ route('cursos.create') }}" class="btn-main">Criar Curso</a></li> <!-- Novo botão para criar cursos -->
                         <li><a href="{{ route('professor.cursos') }}" class="btn-main">Meus Cursos</a></li>
                     @endauth
 
@@ -36,15 +37,7 @@
 
     <main>
         <div class="container">
-            <h1>Bem-vindo à Plataforma de Cursos Online</h1>
-
-            @guest
-            <div class="buttons">
-                <a href="{{ route('login.aluno') }}" class="btn-main">Login como Aluno</a>
-                <a href="{{ route('login.professor') }}" class="btn-main">Login como Professor</a>
-                <a href="{{ route('register') }}" class="btn-secondary">Cadastrar-se</a>
-            </div>
-            @endguest
+            @yield('content')
         </div>
     </main>
 

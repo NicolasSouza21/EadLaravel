@@ -1,0 +1,93 @@
+/* Estilo geral do corpo */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Garante que o rodapé fique no fundo da página */
+}
+
+/* Container principal para centralizar o conteúdo */
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Estilos do cabeçalho e navbar */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav h1 {
+    margin: 0;
+    padding-left: 20px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    color: #fff; /* Cor do texto dos botões */
+    text-decoration: none;
+    padding: 10px 20px; /* Ajusta o tamanho do botão */
+    display: block;
+    border-radius: 5px;
+    margin: 0 5px; /* Adiciona margem entre os botões */
+    transition: color 0.3s, border-color 0.3s; /* Adiciona transição suave */
+    background-color: transparent; /* Fundo transparente */
+    border: 1px solid #fff; /* Borda branca para destacar o botão */
+}
+
+nav ul li a:hover {
+    color: #333; /* Cor do texto quando o botão é hovered */
+    border-color: #333; /* Cor da borda quando o botão é hovered */
+}
+
+/* Estilo dos botões principais e secundários */
+.btn-main, .btn-secondary {
+    background-color: transparent; /* Fundo transparente */
+    border: 1px solid #fff; /* Borda branca */
+}
+
+.btn-main:hover, .btn-secondary:hover {
+    color: #333; /* Cor do texto quando o botão é hovered */
+    border-color: #333; /* Cor da borda quando o botão é hovered */
+}
+
+/* Estilos do rodapé */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    margin-top: auto; /* Empurra o rodapé para baixo */
+}
+
+footer .container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Espaçamento entre os botões no rodapé */
+}
+
+footer form {
+    display: inline;
+}

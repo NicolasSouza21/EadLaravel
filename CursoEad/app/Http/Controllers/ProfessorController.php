@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Curso;
 use App\Models\Professor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfessorController extends Controller
 {
@@ -35,5 +37,20 @@ class ProfessorController extends Controller
         return redirect()->route('professores.index');
     }
 
-    // Outros métodos como edit, update e destroy seriam implementados aqui.
+    public function dashboard()
+    {
+        $professor = Auth::guard('professor')->user();
+        return view('professor.dashboard', compact('professor'));
+    }
+
+    public function cursos()
+    {
+        // Obter o ID do professor autenticado
+        $professorId = Auth::guard('professor')->user()->id;
+
+        // Buscar cursos onde professor_id corresponde ao ID do professor autenticado
+        $cursos = Curso::where('professor_id', $professorId)->get();
+
+        return view('professor.cursos', compact('cursos'));
+    }
 }

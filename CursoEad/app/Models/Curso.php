@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +17,8 @@ class Curso extends Model
         'descricao',
         'data_inicio',
         'data_fim',
-        'preco'
+        'preco',
+        'professor_id', // Inclua o campo professor_id
     ];
 
     // Relacionamento: Um curso pode ter muitos alunos.
@@ -26,4 +26,15 @@ class Curso extends Model
     {
         return $this->belongsToMany(Aluno::class, 'aluno_curso');
     }
+
+    // Relacionamento: Um curso pertence a um professor.
+    public function professor()
+    {
+        return $this->belongsTo(Professor::class, 'professor_id');
+    }
+    protected $casts = [
+        'data_inicio' => 'datetime',
+        'data_fim' => 'datetime',
+    ];
+
 }
